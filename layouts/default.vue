@@ -1,40 +1,41 @@
 <template>
-  <v-app dark>
-    <v-navigation-drawer
-      :mini-variant.sync="miniVariant"
-      :clipped="clipped"
-      v-model="drawer"
-      fixed
-      app
-    >
+  <v-app>
+    <v-navigation-drawer v-model= "sideNav" app>
       <v-list>
-        <v-list-tile
+        <v-list-tile 
           router
           :to="item.to"
-          :key="i"
-          v-for="(item, i) in items"
-          exact
-        >
+          v-for = "item in Items" 
+          :key = "item.title">
           <v-list-tile-action>
-            <v-icon v-html="item.icon"></v-icon>
+            <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
-          </v-list-tile-content>
+          <v-list-tile-content>{{item.title}}</v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar fixed app :clipped-left="clipped">
-      <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
-      <v-spacer></v-spacer>
+    <v-toolbar dark class="purple darken-1">
+      <v-toolbar-side-icon @click.native.stop = "sideNav = !sideNav"
+      class="hidden-sm-and-up"></v-toolbar-side-icon>
+        <v-toolbar-title>Student Management.</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-item class="hidden-xs-only">
+          <v-btn flat
+          router
+          :to="item.to" 
+          v-for = "item in Items" 
+          :key = "item.title">
+            <v-icon left dark="">{{item.icon}}</v-icon>
+              {{item.title}}
+          </v-btn>
+        </v-toolbar-item>
     </v-toolbar>
     <v-content>
       <v-container>
         <nuxt />
       </v-container>
     </v-content>
-    <v-footer :fixed="fixed" app>
+      <v-footer :fixed="fixed" app class="purple lighten-2" dark>
       <span>&copy; 2018</span>
     </v-footer>
   </v-app>
@@ -44,19 +45,15 @@
   export default {
     data () {
       return {
-        clipped: false,
-        drawer: false,
+        sideNav: false,
         fixed: false,
-        items: [
-          { icon: 'apps', title: 'Home', to: '/' },
-          { icon: 'bubble_chart', title: 'Member', to: '/member' },
-          { icon: 'event', title: 'Login', to: '/auth' }
-        ],
-        miniVariant: false,
-        right: true,
-        rightDrawer: false,
-        title: 'สำนักงานคณะกรรมการการอาชีวศึกษา (สอศ.)'
+        Items: [
+          { icon: 'supervisor_account', title: 'Home', to: '/' },
+          { icon: 'person', title: 'Profile', to: '/member' },
+          { icon: 'face', title: 'Sign up', to: '/register' },
+          { icon: 'lock_open', title: 'Sign in', to: '/auth' }
+        ]
       }
-    }
+    },
   }
 </script>

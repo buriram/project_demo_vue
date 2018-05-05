@@ -1,45 +1,64 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
+    <v-navigation-drawer v-model= "sideNav" app>
+      <v-list>
+        <v-list-tile 
+          router
+          :to="item.to"
+          v-for = "item in Items" 
+          :key = "item.title">
+          <v-list-tile-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>{{item.title}}</v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <v-toolbar dark class="purple darken-1">
+      <v-toolbar-side-icon @click.native.stop = "sideNav = !sideNav"
+      class="hidden-sm-and-up"></v-toolbar-side-icon>
+        <v-toolbar-title>Student Management.</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-item class="hidden-xs-only">
+          <v-btn flat
+          router
+          :to="item.to" 
+          v-for = "item in Items" 
+          :key = "item.title">
+            <v-icon left dark="">{{item.icon}}</v-icon>
+              {{item.title}}
+          </v-btn>
+        </v-toolbar-item>
+    </v-toolbar>
     <v-content>
-      <v-container fluid fill-height>
-        <v-layout align-center justify-center>
-          <v-flex xs12 sm8 md4>
-            <v-card class="elevation-12">
-              <v-toolbar dark color="primary">
-                <v-toolbar-title>Login form</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-tooltip right>
-                  <v-btn icon large href="https://codepen.io/johnjleider/pen/wyYVVj" target="_blank" slot="activator">
-                    <v-icon large>mdi-codepen</v-icon>
-                  </v-btn>
-                  <span>Codepen</span>
-                </v-tooltip>
-              </v-toolbar>
-              <v-card-text>
-                <v-form>
-                  <v-text-field prepend-icon="person" name="login" label="Login" type="text"></v-text-field>
-                  <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password"></v-text-field>
-                </v-form>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary"><v-icon medium dark>folder_open</v-icon>Login</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-        </v-layout>
+      <v-container>
+        <nuxt />
       </v-container>
     </v-content>
+      <v-footer :fixed="fixed" app class="purple lighten-2" dark>
+      <span>&copy; 2018bbbbbb</span>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
   export default {
-    data: () => ({
-      drawer: null
-    }),
-    props: {
-      source: String
+    data () {
+      return {
+        clipped: false,
+        drawer: false,
+        fixed: false,
+        items: [
+          { icon: 'apps', title: 'Home', to: '/' },
+          { icon: 'bubble_chart', title: 'Member', to: '/student/member' },
+          { icon: 'bubble_chart', title: 'addStudent', to: '/student/add' },
+          { icon: 'room', title: 'Logout', to: '/' }
+        ],
+        miniVariant: false,
+        right: true,
+        rightDrawer: false,
+        title: 'For Administrator.'
+      }
     }
   }
 </script>
