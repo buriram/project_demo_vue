@@ -27,7 +27,7 @@
             <v-snackbar
             top
             v-model="snackbar">
-            <v-alert :value="true" outline color="primary" dark icon="warning" @click.native="snackbar = false">
+            <v-alert :value="true" outline color="primary" dark icon="cloud_done" @click.native="snackbar = false">
               Success Data.
             </v-alert>
            </v-snackbar>
@@ -78,14 +78,14 @@ export default {
     },
     async save() {
       let res = await this.$http.post('http://chk.cdp58.com/st_check.php', {chk: this.chk})
-      console.log(thik.chk)
-          if (res.data.ok!="true") {
+     // console.log(thik.chk)
+      console.log(res.data.ok)
+          if (res.data.ok!=true) {
         // TODO: แสดงข้อความ ว่าบันทึกไม่สำเร็จ
           } else {
         // TODO: แสดงข้อความ ว่าบันทึกสำเร็จ
-            this.$router.push('/student')
-        //   this.snackbar=true
-           console.log(res.data.ok)
+           // this.$router.push('/student')
+          this.snackbar=true
           }
     }
   }, // methods
