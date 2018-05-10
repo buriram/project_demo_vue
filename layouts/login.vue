@@ -52,13 +52,19 @@
           { icon: 'apps', title: 'Home', to: '/' },
           { icon: 'bubble_chart', title: 'Member', to: '/student/member' },
           { icon: 'bubble_chart', title: 'addStudent', to: '/student/add' },
-          { icon: 'room', title: 'Logout', to: '/' }
+          { icon: 'room', title: 'Logout', to: '/logout' }
         ],
         miniVariant: false,
         right: true,
         rightDrawer: false,
         title: 'For Administrator.'
       }
-    }
+    },       
+   created () {
+        let user = JSON.parse(window.sessionStorage.getItem('user') ||'{}')
+          if (!user) {
+            return this.$router.replace('/auth')
+          }
+  },
   }
 </script>

@@ -50,6 +50,9 @@
         // TODO: แสดงข้อความ ว่าบันทึกไม่สำเร็จ
         this.snackbar=true
       } else {
+        window.sessionStorage.getItem('user',JSON.stringify({
+        user: this.user,  
+        }))
         // TODO: แสดงข้อความ ว่าบันทึกสำเร็จ
         this.$router.push('/student')
       }

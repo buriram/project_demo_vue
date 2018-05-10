@@ -58,7 +58,6 @@ export default {
     async save() {
       let res = await this.$http.post('http://chk.cdp58.com/st_check.php', {chk: this.chk})
       console.log(thik.chk)
-
     }
   }, // methods
 }

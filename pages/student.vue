@@ -52,7 +52,7 @@
           { icon: 'group', title: 'Member', to: '/student/member' },
           { icon: 'group_add', title: 'addStudent', to: '/student/add' },
           { icon: 'description', title: 'behavior', to: '/student/behavior' },
-          { icon: 'room', title: 'Logout', to: '/' }
+          { icon: 'room', title: 'Logout', to: '/logout' }
         ],
         miniVariant: false,
         right: true,
