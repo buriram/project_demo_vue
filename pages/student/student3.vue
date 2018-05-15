@@ -14,10 +14,7 @@
           class="elevation-1"
       >
         <template slot="items" slot-scope="props">
-        <td class="text-xs-left">{{ props.item.code }}</td>
-        <td class="text-xs-left">{{ props.item.firstName }}</td>
-        <td class="text-xs-left">{{ props.item.lastName }}</td>
-        <td class="text-xs-left">{{ props.item.class }}</td>
+        <td class="text-xs-left">{{ props.item.code }} {{ props.item.first_name }} {{ props.item.last_name }}</td>
         <td class="text-xs-left"><v-checkbox v-model="chk" :value="props.item.code"></v-checkbox></td>
         </template>
   
@@ -38,21 +35,18 @@
 export default {
   data() {
     return {
-      cls: '1',
+      cls: 's11',
       chk: [],
       students: [],
       snackbar: false,
       clsList: [
-        { value: '1', text: 'ชั้นปีที่ 1' },
-        { value: '2', text: 'ชั้นปีที่ 2' },
+        { value: 's11', text: 'สคธ.11' },
+        { value: 'pp', text: 'ชั้นปีที่ 2' },
         { value: '3', text: 'ชั้นปีที่ 3' },
       ],
       headers: [
-        { text: 'Code', align: 'left', sortable: false},
-        { text: 'First Name', align: 'left', sortable: false},
-        { text: 'Last Name', align: 'left', sortable: false},
-        { text: 'Class', align: 'left', sortable: false},
-        { text: 'Edit', align: 'left', sortable: false},
+        { text: 'Data', align: 'left', sortable: false},
+        { text: 'Check', align: 'left', sortable: false},
       ],
     }
     },
@@ -73,11 +67,12 @@ export default {
   methods: {
     async getStudent() {
       // let res = await this.$http.get('/student?class=' + this.cls)
-      let res = await this.$http.get('/student', {params: {class: this.cls}})
+      //let res = await this.$http.get('/student', {params: {class: this.cls}})
+      let res = await this.$http.get('http://chk.cdp58.com/api/list_student.php?class=' + this.cls)
       this.students = res.data.student
     },
     async save() {
-      let res = await this.$http.post('http://chk.cdp58.com/st_check.php', {chk: this.chk})
+      let res = await this.$http.post('http://chk.cdp58.com/api/st_check.php', {chk: this.chk})
      // console.log(thik.chk)
       console.log(res.data.ok)
           if (res.data.ok!=true) {

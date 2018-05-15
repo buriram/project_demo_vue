@@ -14,14 +14,14 @@
       <p>วท.บุรีรัมย์</p>
     </article>
     <article class="boxed">
-      <div  class="thumbnail"><img src="/Krulek.jpg" alt="ระบบจัดการข้อมูลนักศึกษา" class="mb-5" /></div>
-      <h1>นางสุดฤดี  ประทุมชาติ</h1>
-      <p>วอศ.อุบลราชธานี</p>
+      <div  class="thumbnail"><img src="/ank.jpg" alt="ระบบจัดการข้อมูลนักศึกษา" class="mb-5" /></div>
+      <h1>นางสาวอรุณ  ปะกลาง</h1>
+      <p>วท.บุรีรัมย์</p>
     </article>
     <article class="boxed">
-      <div  class="thumbnail"><img src="/KruBig1.jpg" alt="ระบบจัดการข้อมูลนักศึกษา" class="mb-5" /></div>
-      <h1>นายกัมปนาท หวะสุวรรณ</h1>
-      <p>วท.ชัยภูมิ</p>
+      <div  class="thumbnail"><img src="/pu.jpg" alt="ระบบจัดการข้อมูลนักศึกษา" class="mb-5" /></div>
+      <h1>นายรังสรรค์  ทบวอ</h1>
+      <p>วท.บุรีรัมย์</p>
     </article>
   </section>
 </template>
@@ -42,6 +42,6 @@
   background-position: center;
   background-size: cover;
   width: 260px;
-  height: 200px;
+  height: 298px;
 }
 </style>

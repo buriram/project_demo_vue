@@ -49,7 +49,7 @@
         fixed: false,
         items: [
           { icon: 'apps', title: 'Home', to: '/student' },
-          { icon: 'group', title: 'Member', to: '/student/member' },
+          { icon: 'group', title: 'Check', to: '/student' },
           { icon: 'group_add', title: 'addStudent', to: '/student/add' },
           { icon: 'description', title: 'behavior', to: '/student/behavior' },
           { icon: 'room', title: 'Logout', to: '/logout' }
@@ -57,7 +57,7 @@
         miniVariant: false,
         right: true,
         rightDrawer: false,
-        title: 'For Administrator.'
+        title: 'For Teacher.'
       }
     }
   }

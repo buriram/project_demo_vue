@@ -33,7 +33,7 @@ module.exports = {
     theme_color: '#3B8070',
   },
   head: {
-    title: 'APP TITLE',
+    title: 'STD Checking',
     meta: [
       { charset: 'utf-8' },
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },

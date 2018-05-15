@@ -1,5 +1,6 @@
 <template>
-    <div>
+  <div>
+    <h1>Student List</h1>
       <v-select
           :headers="headers"
           :items="clsList"
@@ -7,46 +8,51 @@
           label="โปรดเลือกชั้นปี"
           single-line
       />
-
-      <v-data-table
+    <v-data-table
           :headers="headers"
           :items="students"
           class="elevation-1"
       >
         <template slot="items" slot-scope="props">
-        <td class="text-xs-left">{{ props.item.code }}</td>
-        <td class="text-xs-left">{{ props.item.firstName }}</td>
-        <td class="text-xs-left">{{ props.item.lastName }}</td>
-        <td class="text-xs-left">{{ props.item.class }}</td>
-        <td class="text-xs-left"><v-icon @click="edit_st(props.item.id)" class="green--text" style="cursor: pointer">edit</v-icon></td>
-        <td class="text-xs-left"><v-icon @click="edit_st(props.item.id)" class="green--text" style="cursor: pointer">delete_forever</v-icon></td>
+        <td class="text-xs-left">{{ props.item.code }} {{ props.item.first_name }} {{ props.item.last_name }}</td>
+        <td class="text-xs-left"><v-checkbox v-model="chk" :value="props.item.code"></v-checkbox></td>
         </template>
   
       </v-data-table> 
        <div class="text-xs-right">
-          <v-btn @click="edit_st(props.item.id)" color="primary" dark style="cursor: pointer">check<v-icon>add_box</v-icon></v-btn>
+          <v-btn @click="save" color="primary" dark style="cursor: pointer">check<v-icon>add_box</v-icon></v-btn>
+            <v-snackbar
+            top
+            v-model="snackbar">
+            <v-alert :value="true" outline color="primary" dark icon="cloud_done" @click.native="snackbar = false">
+              Success Data.
+            </v-alert>
+           </v-snackbar>
        </div>
-  </div> 
+  </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      cls: '1',
+      cls: '320411',
+      chk: [],
       students: [],
-      clsList: [
-        { value: '1', text: 'ชั้นปีที่ 1' },
-        { value: '2', text: 'ชั้นปีที่ 2' },
-        { value: '3', text: 'ชั้นปีที่ 3' },
-      ],
+      snackbar: false,
+      classe: [],
       headers: [
-        { text: 'Code', align: 'left', sortable: false},
-        { text: 'First Name', align: 'left', sortable: false},
-        { text: 'Last Name', align: 'left', sortable: false},
-        { text: 'Class', align: 'left', sortable: false},
-        { text: 'Edit', align: 'left', sortable: false},
+        { text: 'Data', align: 'left', sortable: false},
+        { text: 'Check', align: 'left', sortable: false},
       ],
     }
+    },
+  computed: {
+    clsList() {
+      return this.classe.map(x => ({value: `${x.class_id}`, text: `${x.class_name}`}))
+    },
+    filteredStudent() {
+      return this.students.filter(x => x.class + '' === this.cls)
+    },
   },
   watch: {
     cls() {
@@ -56,22 +62,31 @@ export default {
   async created() {
     console.log('created')
     this.getStudent()
+    this.getClass_id()
   },
   methods: {
+    async getClass_id() {
+      let res = await this.$http.get('http://chk.cdp58.com/api/list_class.php')
+      this.classe = res.data.classed
+    },
     async getStudent() {
       // let res = await this.$http.get('/student?class=' + this.cls)
-      let res = await this.$http.get('/student', {params: {class: this.cls}})
+      //let res = await this.$http.get('/student', {params: {class: this.cls}})
+      let res = await this.$http.get('http://chk.cdp58.com/api/list_student.php?class=' + this.cls)
       this.students = res.data.student
     },
-    edit_st(id) {
-        this.$router.push('/student/edit?id='+id)
-    },
-    add_st(id) {
-        this.$router.push('/student/add_beh?id='+id)
-    },
-    delete_st(id) {
-        this.$router.push('/student/delete?id='+id)
-    },
+    async save() {
+      let res = await this.$http.post('http://chk.cdp58.com/api/st_check.php', {chk: this.chk})
+     // console.log(thik.chk)
+      console.log(res.data.ok)
+          if (res.data.ok!=true) {
+        // TODO: แสดงข้อความ ว่าบันทึกไม่สำเร็จ
+          } else {
+        // TODO: แสดงข้อความ ว่าบันทึกสำเร็จ
+           // this.$router.push('/student')
+          this.snackbar=true
+          }
+    }
   }, // methods
 }
 </script>
