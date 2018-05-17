@@ -35,6 +35,7 @@
 export default {
   data() {
     return {
+      user:  JSON.parse(window.sessionStorage.getItem('user')),
       cls: '320411',
       chk: [],
       students: [],
@@ -66,7 +67,7 @@ export default {
   },
   methods: {
     async getClass_id() {
-      let res = await this.$http.get('http://chk.cdp58.com/api/list_class.php')
+      let res = await this.$http.get('http://chk.cdp58.com/api/list_class.php?ta_code=' +this.user.user)
       this.classe = res.data.classed
     },
     async getStudent() {
@@ -76,7 +77,7 @@ export default {
       this.students = res.data.student
     },
     async save() {
-      let res = await this.$http.post('http://chk.cdp58.com/api/st_check.php', {chk: this.chk})
+      let res = await this.$http.post('http://chk.cdp58.com/api/st_check.php', {chk: this.chk, user: this.user.user})
      // console.log(thik.chk)
       console.log(res.data.ok)
           if (res.data.ok!=true) {

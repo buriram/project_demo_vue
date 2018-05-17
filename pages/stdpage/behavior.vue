@@ -32,9 +32,7 @@
           class="elevation-1"
       >
         <template slot="items" slot-scope="props">
-        <td class="text-xs-left">{{ props.item.code }}</td>
-        <td class="text-xs-left">{{ props.item.first_name }}</td>
-        <td class="text-xs-left">{{ props.item.last_name }}</td>
+        <td class="text-xs-left">{{ props.item.code }} {{ props.item.first_name }} {{ props.item.last_name }}</td>
         <td class="text-xs-left">{{ props.item.ch_ts }}</td>
         </template>
   
@@ -43,19 +41,18 @@
 </template>
 <script>
 export default {
+  layout: 'std',
   data() {
     return {
       user:  JSON.parse(window.sessionStorage.getItem('user')),
       chk: [],
       students: [],
       headers: [
-        { text: 'code', align: 'left', sortable: false},
-        { text: 'Firstname', align: 'left', sortable: false},
-        { text: 'Lastname', align: 'left', sortable: false},
+        { text: 'data', align: 'left', sortable: false},
         { text: 'time', align: 'left', sortable: false},
 
       ],
-      date: '2018-05-11',
+      date: '',
       dateFormatted: null,
       menud: false
     }
@@ -80,22 +77,15 @@ export default {
   },
   methods: {
     async getStudent() {
+      if(this.date){
+      let res = await this.$http.get('http://chk.cdp58.com/api/std_check.php?ch_date=' + this.date +'&user='+this.user.user)
+      this.students = res.data.student  
+      }else{
       // let res = await this.$http.get('/student?class=' + this.cls)
       //let res = await this.$http.get('/student', {params: {class: this.cls}})
-      let res = await this.$http.get('http://chk.cdp58.com/api/st_behav.php?ch_date=' + this.date +'&user='+this.user.user)
+      let res = await this.$http.get('http://chk.cdp58.com/api/std_checkAll.php?user='+this.user.user)
       this.students = res.data.student
-    },
-    async save() {
-      let res = await this.$http.post('http://chk.cdp58.com/api/st_check.php', {chk: this.chk})
-     // console.log(thik.chk)
-      console.log(res.data.ok)
-          if (res.data.ok!=true) {
-        // TODO: แสดงข้อความ ว่าบันทึกไม่สำเร็จ
-          } else {
-        // TODO: แสดงข้อความ ว่าบันทึกสำเร็จ
-           // this.$router.push('/student')
-          this.snackbar=true
-          }
+      }
     },
      formatDate (date) {
         if (!date) return null

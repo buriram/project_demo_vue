@@ -30,6 +30,7 @@
 </template>
 <script>
   export default {
+    layout: 'public',
     data: () => ({
       snackbar: false,
       e1: true,
@@ -41,12 +42,6 @@
         v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
       ]
     }),
-    created () {
-        let user = JSON.parse(window.sessionStorage.getItem('user') ||'{}')
-          if (!user) {
-            return this.$router.replace('/student')
-          }
-  },
     methods: {
     async Dosend() {
       //let res = await this.$http.post('/auth/login', {
@@ -60,11 +55,10 @@
       } else {
         window.sessionStorage.setItem('user',JSON.stringify({
         user: this.user,  
-        
         }))
+        
         // TODO: แสดงข้อความ ว่าบันทึกสำเร็จ
         this.$router.push('/student')
-        console.log(user)
       }
     },
     },

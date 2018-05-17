@@ -32,7 +32,7 @@
       </v-container>
     </v-content>
       <v-footer :fixed="fixed" app class="purple lighten-2" dark>
-      <span>&copy; 2018</span>
+      <span>&copy; 2018->For student.</span>
     </v-footer>
   </v-app>
 </template>
@@ -45,12 +45,19 @@
         sideNav: false,
         fixed: false,
         Items: [
-          { icon: 'supervisor_account', title: 'Home', to: '/' },
-          { icon: 'person', title: 'Profile', to: '/member' },
-          { icon: 'face', title: 'Sign up', to: '/register' },
-          { icon: 'lock_open', title: 'Sign in', to: '/auth' }
+          { icon: 'supervisor_account', title: 'Home', to: '/stdpage' },
+          { icon: 'person', title: 'Profile', to: '/stdpage/profile' },
+          { icon: 'face', title: 'behavior', to: '/stdpage/behavior' },
+          { icon: 'lock_open', title: 'Sign out', to: '/' }
         ]
       }
     },
+    created () {
+        let user = JSON.parse(window.sessionStorage.getItem('user') ||'{}')
+          if (!user) {
+            return this.$router.replace('/std')
+          }
+    this.user = user
+},
   }
 </script>

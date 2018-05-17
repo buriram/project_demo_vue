@@ -41,7 +41,6 @@
   export default {
     data () {
       return {
-        user:  JSON.parse(window.sessionStorage.getItem('user')),
         sideNav: false,
         fixed: false,
         Items: [
@@ -52,5 +51,12 @@
         ]
       }
     },
+    created () {
+        let user = JSON.parse(window.sessionStorage.getItem('user') ||'{}')
+          if (!user) {
+            return this.$router.replace('/student')
+          }
+    this.user = user
+},
   }
 </script>
